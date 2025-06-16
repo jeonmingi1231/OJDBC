@@ -1,0 +1,62 @@
+diff a/sql/oracletest.sql b/sql/oracletest.sql	(rejected hunks)
+@@ -0,0 +1,59 @@
++create table member(
++mno number(5) not null,
++mname nvarchar2(10) not null,
++id nvarchar2(10) primary key, --pk ����
++pw nvarchar2(10) not null,
++regidate date default sysdate not null
++)
++create sequence member_seq increment by 1 start with 1 nocycle nocache
++-- ������ ����(1���� �����ؼ� ������ ���� �ݺ����� �ʰ� ����)
++
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'���α�','jmg','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'������','kjw','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'�躸��','kbr','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'���ϴ�','lhn','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'������','bhm','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'�����','ksb','1234')
++insert into member (mno,mname,id,pw)
++values (member_seq.nextval,'������','jhj','1234')
++
++select * from member -- ���̺� Ȯ�ο� 
++drop table member -- ���̺� ������
++delete from member -- ���̺� ������ ������
++------------------------------------member table ��-----------------------------------------------------------
++alter table board add constraint board_member_fk foreign key (bwriter) references member(id)
++create table board (
++bno number(5) primary key,
++btitle nvarchar2(30) not null,
++bcontent nvarchar2(1000) not null,
++bwriter nvarchar2(10) not null, -- �ܷ�Ű
++bdate date not null
++)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '���', '���־��','jmg',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '��', '�޾ƿ�','kjw',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '����', '�ſ�','kbr',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '�ڸ�', '���','lhn',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '�ٳ���', '����','bhm',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '����', '������','ksb',sysdate)
++insert into board (bno, btitle, bcontent, bwriter, bdate)
++values (member_seq.nextval, '���ξ���', '�ް�ſ�','jhj',sysdate)
++select * from board -- ���̺� Ȯ�ο� 
++drop table board -- ���̺� ������
++delete from board -- ���̺� ������ ������
++-------------------------------------------------------------------------------------------------
++select b.*, m.mname from member m inner join board b on m.id = b.bwriter where m.id='jmg'
++-- ȸ�� ���̺�� �Խ��� ���̺� id=bwriter �������� �����ؼ� jmg�� ȸ���� �ۼ��� ���� ��ȸ�ϴ� ������.
++select id from member
++select bwriter from board
+\ No newline at end of file
